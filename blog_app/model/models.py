@@ -1,6 +1,6 @@
 from datetime import datetime
 from werkzeug.security import check_password_hash
-from cms_app import db
+from blog_app import db
 
 class BaseModel(object):
     """模型基类，为每个模型补充创建时间与更新时间"""
@@ -12,7 +12,7 @@ class User(BaseModel,db.Model):
     __tablename__ = 'user'
 
     id = db.Column(db.Integer,primary_key=True) #用户编号
-    username = db.Column(db.String(32),unique=True,nullable=False) #用户昵称
+    username = db.Column(db.String(32),unique=True,nullable=False) #用户名
     password = db.Column(db.String(128),nullable=False) #加密密码
     mobile  = db.Column(db.String(11),unique=True,nullable=False) #手机号
     last_login = db.Column(db.DateTime,default=datetime.now) #最后一次登录时间

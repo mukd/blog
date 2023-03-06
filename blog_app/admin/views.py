@@ -1,8 +1,8 @@
 import re
 from flask import render_template, url_for, flash, redirect, session, request, jsonify, json
 from werkzeug.security import generate_password_hash, check_password_hash
-from cms_app import db
-from cms_app.model.models import User
+from blog_app import db
+from blog_app.model.models import User
 from . import admin_bule  # 导入蓝图对象
 from ..utils.captcha import  imgCode
 from ..utils.common import login_limt
@@ -60,6 +60,7 @@ def login():
             return redirect(request.referrer)
         #登录成功后,存储用户信息到session
         session['username'] = user.username
+
         session.permanent = True
         return redirect(url_for('admin_bule.hello'))
     return render_template('admin/user/login.html')

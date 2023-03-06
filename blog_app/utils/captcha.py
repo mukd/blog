@@ -37,7 +37,7 @@ class imageCode():
     # 新图片对象
     im = Image.new('RGB', (width, height), 'white')
     # 字体
-    font = ImageFont.truetype('cms_app/static/layui/font/Arial.ttf',30)
+    font = ImageFont.truetype('blog_app/static/layui/font/Arial.ttf',30)
     # draw对象
     draw = ImageDraw.Draw(im)
     # 绘制字符串

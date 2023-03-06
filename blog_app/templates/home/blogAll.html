@@ -1,6 +1,6 @@
 {% extends 'admin/base.html' %}
 {% block title %}
-    在线博客平台.我的博客
+    在线博客平台.博客
 {% endblock %}
 
 {% block css %}
@@ -19,58 +19,50 @@
     <table class="table is-fullwidth is-hoverable is-striped">
         <thead>
             <tr>
-              <th>ID</th>
+              <th>序号</th>
               <th>标题</th>
               <th>发布时间</th>
               <th>操作</th>
             </tr>
         </thead>
 
-        <tbody>
-
-            {% for post in post_list %}   
+            {% for post in post_list %}
             <tr>
                 <td>{{ post.id }}</td>
                 <td>{{ post.title }}</td>
                 <td>{{ post.create_time }}</td>
                 <td>
                     <div class="tags">
-                        <a href="/update/{{ post.id }}" class="tag is-success is-light">
+                        <a href="/showBlog/{{ post.id }}" class="tag is-success is-light">
                             <span class="icon">
                                 <i class="mdi mdi-square-edit-outline"></i>
                             </span>
-                            编辑
-                        </a>
-                        <a href="javascript:;" onclick="del('/delete/{{ post.id }}', this)" class="tag is-danger is-light">
-                            <span class="icon">
-                                <i class="mdi mdi-trash-can-outline"></i>
-                            </span>
-                            删除
+                            浏览
                         </a>
                     </div>
                 </td>
+
             </tr>
+
             {% endfor %}
-
-        </tbody>
+          <div id="page"></div>
     </table>
-
 
 <nav class="pagination is-small" role="navigation" aria-label="pagination">
     <!--
     {% if pagination.has_prev %}
-    <a href="{{ url_for('home_blue.article') }}?page={{ pagination.prev_num }}" class="pagination-previous" title="This is the first page">Previous</a>
+    <a href="{{ url_for('home_blue.blogAll') }}?page={{ pagination.prev_num }}" class="pagination-previous" title="This is the first page">Previous</a>
     {% endif %}
     {% if pagination.has_next %}
-    <a href="{{ url_for('home_blue.article') }}?page={{ pagination.next_num }}" class="pagination-next">Next page</a>
+    <a href="{{ url_for('home_blue.blogAll') }}?page={{ pagination.next_num }}" class="pagination-next">Next page</a>
     {% endif %}
     -->
-    <ul class="pagination-list">        
+    <ul class="pagination-list">
         {% for page in pagination.iter_pages() %}
-            {% if page %} 
+            {% if page %}
                 {% if page != pagination.page %}
                 <li>
-                    <a href="{{ url_for('home_blue.article') }}?page={{ page }}" class="pagination-link" aria-label="Page 1" aria-current="page">{{ page }}</a>
+                    <a href="{{ url_for('home_blue.blogAll') }}?page={{ page }}" class="pagination-link" aria-label="Page 1" aria-current="page">{{ page }}</a>
                 </li>
                 {% else %}
                 <li>
@@ -85,23 +77,4 @@
     </ul>
 </nav>
 </div>
- <script type="text/javascript">
-        function del(url, that){
-            layui.use('layer', function(){
-                var layer = layui.layer;
-                layer.confirm('您确定要删除这条博客吗？', {
-                    btn: ['取消','确定']
-                }, function(index){
-                    layer.close(index);
-                }, function(){
-                    $.get(url, function (data){
-                        if(data.state){
-                            $(that).parent().parent().parent().remove();
-                            layer.msg(data.msg, {icon: 1});
-                        }
-                    })
-                });
-            });
-        }
-    </script>
 {% endblock  %}
